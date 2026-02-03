@@ -52,7 +52,7 @@ brew install poppler
 ```bash
 # 克隆到 OpenWork Skills 目录
 cd ~/Library/Application\ Support/com.differentai.openwork/workspaces/starter/.opencode/skills
-git clone https://github.com/mr-shaper/opencode-paddle-ocr.git paddle-ocr
+git clone https://github.com/mr-shaper/opencode-skills-paddle-ocr.git paddle-ocr
 ```
 
 ### 3. 使用
