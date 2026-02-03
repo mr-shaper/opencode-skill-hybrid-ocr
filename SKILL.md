@@ -1,12 +1,27 @@
 ---
 name: paddle-ocr
-description: |
-  Lightweight OCR skill using PaddleOCR-VL (0.9B) via Ollama for text extraction from images and PDFs.
-  Supports 109 languages, tables, formulas, and charts.
-  Use when: "OCR this image", "extract text from image/PDF", "read document content", "recognize text", "parse document"
+description: OCR skill using PaddleOCR-VL (0.9B) via Ollama for text extraction from images and PDFs. Supports 109 languages, tables, formulas, and charts. Use when Claude needs to extract text from images, scan documents, recognize text in screenshots, or parse PDF content that requires OCR.
 ---
 
 # PaddleOCR-VL OCR Skill
+
+## How to Use (For AI)
+
+When you need to extract text from an image or PDF, run this command:
+
+```bash
+python3 ~/.opencode/skills/paddle-ocr/scripts/ocr.py "/absolute/path/to/image.png"
+```
+
+Or with the full path:
+```bash
+python3 "/Users/mrshaper/Library/Application Support/com.differentai.openwork/workspaces/starter/.opencode/skills/paddle-ocr/scripts/ocr.py" "/path/to/image.png"
+```
+
+### Options
+- `--json` - Output as JSON format
+- `--prompt "custom prompt"` - Custom OCR instruction
+- `--output result.txt` - Save to file
 
 ## Overview
 
@@ -20,7 +35,7 @@ This skill provides OCR (Optical Character Recognition) capabilities using the P
 
 ### Single Image OCR
 ```bash
-python scripts/ocr.py image.png
+python3 scripts/ocr.py image.png
 ```
 
 ### PDF Document OCR
