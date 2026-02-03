@@ -33,6 +33,30 @@ OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 # DeepSeek-OCR via Ollama
 # ============================================
 
+def resize_image_if_needed(image_path: str, max_size: int = 1536) -> str:
+    """Resize image if too large, returns path to (possibly new) image."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return image_path  # Can't resize, use original
+
+    with Image.open(image_path) as img:
+        width, height = img.size
+        if width <= max_size and height <= max_size:
+            return image_path
+
+        # Calculate new size maintaining aspect ratio
+        ratio = min(max_size / width, max_size / height)
+        new_size = (int(width * ratio), int(height * ratio))
+
+        print(f"Resizing image from {width}x{height} to {new_size[0]}x{new_size[1]}", file=sys.stderr)
+
+        resized = img.resize(new_size, Image.Resampling.LANCZOS)
+        temp_file = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+        resized.save(temp_file.name, "JPEG", quality=90)
+        return temp_file.name
+
+
 def ocr_with_deepseek(image_path: str, prompt: str = "Extract all text from this image.") -> str:
     """Perform OCR using DeepSeek-OCR via Ollama."""
     try:
@@ -41,8 +65,11 @@ def ocr_with_deepseek(image_path: str, prompt: str = "Extract all text from this
         print("Error: requests not found. Install with: pip install requests", file=sys.stderr)
         sys.exit(1)
 
+    # Resize large images to prevent timeout
+    processed_path = resize_image_if_needed(image_path)
+
     # Read and encode image
-    with open(image_path, "rb") as f:
+    with open(processed_path, "rb") as f:
         image_base64 = base64.b64encode(f.read()).decode("utf-8")
 
     # Call Ollama API
@@ -58,10 +85,18 @@ def ocr_with_deepseek(image_path: str, prompt: str = "Extract all text from this
                 }],
                 "stream": False
             },
-            timeout=120
+            timeout=300
         )
         response.raise_for_status()
         result = response.json()
+
+        # Cleanup temp file if we resized
+        if processed_path != image_path:
+            try:
+                os.unlink(processed_path)
+            except Exception:
+                pass
+
         return result.get("message", {}).get("content", "")
     except requests.exceptions.ConnectionError:
         print("Error: Cannot connect to Ollama. Start with: brew services start ollama", file=sys.stderr)
