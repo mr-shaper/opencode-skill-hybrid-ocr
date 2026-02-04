@@ -1,4 +1,4 @@
-# OpenCode Hybrid OCR Skill
+# DeepSeek-OCR 3B + PaddleOCR | OpenCode Hybrid OCR Skill
 
 > Give "eyes" to text-only LLMs — Local OCR for OpenCode/OpenWork
 

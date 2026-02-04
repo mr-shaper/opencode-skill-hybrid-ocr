@@ -1,4 +1,4 @@
-# OpenCode 混合模式 OCR Skill
+# DeepSeek-OCR 3B + PaddleOCR | OpenCode 混合 OCR Skill
 
 > 让没有视觉能力的大模型也能"看"图 — 本地 OCR 工具
 
