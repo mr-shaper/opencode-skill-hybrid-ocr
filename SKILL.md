@@ -1,5 +1,5 @@
 ---
-name: ocr
+name: paddle-ocr
 description: OCR skill for extracting text from images and PDFs. Use when you need to read text from screenshots, photos, scanned documents, or any image file. Supports Chinese, English, and 100+ languages.
 ---
 
@@ -10,7 +10,7 @@ description: OCR skill for extracting text from images and PDFs. Use when you ne
 To extract text from an image or PDF, run:
 
 ```bash
-python3 "/Users/mrshaper/Library/Application Support/com.differentai.openwork/workspaces/starter/.opencode/skills/paddle-ocr/scripts/ocr.py" "/path/to/image.png"
+python3 scripts/ocr.py "/path/to/image.png"
 ```
 
 ## Options
@@ -35,6 +35,21 @@ python3 scripts/ocr.py image.png --fast
 
 # PDF OCR
 python3 scripts/ocr.py document.pdf
+```
+
+## Setup
+
+### Prerequisites
+- **DeepSeek-OCR (smart mode)**: Install Ollama and pull the model
+  ```bash
+  bash scripts/resume_pull.sh
+  ```
+- **PaddleOCR (fast mode)**: `pip install paddleocr`
+
+### Resume Download
+If the model download was interrupted, run:
+```bash
+bash scripts/resume_pull.sh
 ```
 
 ## Supported Formats

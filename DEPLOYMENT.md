@@ -15,7 +15,7 @@ Some LLMs in OpenWork (like GLM-4.7) cannot process images. Even with existing p
 ### Why DeepSeek-OCR?
 
 | Feature | Details |
-|---------|---------|
+| --------- | --------- |
 | **Engine** | DeepSeek-OCR 3B (VLM) |
 | **OCRBench** | 834 (beats GPT-4o's 736) |
 | **Compression** | 10x compression with 97% accuracy |
@@ -26,7 +26,7 @@ Some LLMs in OpenWork (like GLM-4.7) cannot process images. Even with existing p
 ### Hybrid Mode Design
 
 | Mode | Engine | Use Case | Speed |
-|------|--------|----------|-------|
+| ----- | ------ | ---------- | ----- |
 | **Default** | DeepSeek-OCR 3B | Smart extraction, custom prompts | 10-30s/image |
 | **Fast** (`--fast`) | PaddleOCR PP-OCRv5 | Pure text extraction | 1-3s/image |
 
@@ -34,7 +34,7 @@ Some LLMs in OpenWork (like GLM-4.7) cannot process images. Even with existing p
 
 ## How It Works
 
-```
+```text
 ┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │ User Input  │     │ DeepSeek-OCR     │     │ Main Model      │
 │ (Image/PDF) │────▶│ (Local Ollama)   │────▶│ (GLM-4.7 etc.)  │
@@ -55,7 +55,7 @@ Some LLMs in OpenWork (like GLM-4.7) cannot process images. Even with existing p
 
 Large images are automatically resized to prevent timeout:
 
-```
+```text
 Original: 6144x3429
 Resized: 1536x857
 ```
@@ -140,7 +140,7 @@ python3 scripts/ocr.py test_image.png --fast
 
 ### OpenWork Skills Location
 
-```
+```text
 ~/Library/Application Support/com.differentai.openwork/
 └── workspaces/
     └── starter/
@@ -154,7 +154,7 @@ python3 scripts/ocr.py test_image.png --fast
 
 ### Skill Files
 
-```
+```text
 paddle-ocr/
 ├── SKILL.md              # Skill definition (for AI)
 ├── README.md             # English docs
@@ -233,14 +233,14 @@ Please analyze and provide insights.
 ### Model Files
 
 | Component | Size | Location |
-|-----------|------|----------|
+| ---------- | ---- | ---------- |
 | DeepSeek-OCR 3B | 6.7 GB | `~/.ollama/models/` |
 | PaddleOCR (optional) | ~200 MB | `~/.paddlex/official_models/` |
 
 ### Runtime Resources
 
 | State | Ollama | DeepSeek-OCR | Notes |
-|-------|--------|--------------|-------|
+| ----- | ------ | ------------ | ----- |
 | **Idle** | ~30MB | Not loaded | Ollama service only |
 | **First call** | ~30MB | Loading | Loading model to memory |
 | **Processing** | ~30MB | ~6-8GB | While processing images |
@@ -249,7 +249,7 @@ Please analyze and provide insights.
 ### Performance (Apple Silicon Mac)
 
 | Scenario | DeepSeek-OCR | PaddleOCR (--fast) |
-|----------|--------------|-------------------|
+| --------- | ------------ | ----------------- |
 | First run (loading) | 10-20s | 3-5s |
 | Simple text image | 10-15s | 1-3s |
 | Complex table | 15-30s | 3-8s |
@@ -339,7 +339,7 @@ pip install paddleocr paddlepaddle
 ## Model Comparison
 
 | Aspect | DeepSeek-OCR 3B | PaddleOCR PP-OCRv5 |
-|--------|-----------------|-------------------|
+| -------- | --------------- | ----------------- |
 | Type | VLM (Vision Language Model) | Traditional OCR Pipeline |
 | Size | 6.7 GB | ~200 MB |
 | Architecture | Transformer + Vision | Detection + Recognition |
@@ -360,4 +360,4 @@ pip install paddleocr paddlepaddle
 
 ---
 
-*Last updated: 2026-02-03*
+Last updated: 2026-02-03

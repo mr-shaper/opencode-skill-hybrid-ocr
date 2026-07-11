@@ -14,6 +14,7 @@ import os
 import sys
 import tempfile
 from pathlib import Path
+from typing import Optional
 
 # Suppress warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -193,7 +194,7 @@ def pdf_to_images(pdf_path: str) -> list:
 # Main Processing Functions
 # ============================================
 
-def process_image(image_path: str, prompt: str = None, fast_mode: bool = False, lang: str = 'ch') -> dict:
+def process_image(image_path: str, prompt: Optional[str] = None, fast_mode: bool = False, lang: str = 'ch') -> dict:
     """Process a single image and return OCR result."""
     print(f"Processing: {image_path}", file=sys.stderr)
 
@@ -212,7 +213,7 @@ def process_image(image_path: str, prompt: str = None, fast_mode: bool = False, 
     }
 
 
-def process_pdf(pdf_path: str, prompt: str = None, fast_mode: bool = False, lang: str = 'ch') -> dict:
+def process_pdf(pdf_path: str, prompt: Optional[str] = None, fast_mode: bool = False, lang: str = 'ch') -> dict:
     """Process a PDF file by converting to images and OCR each page."""
     print(f"Processing PDF: {pdf_path}", file=sys.stderr)
     temp_images = pdf_to_images(pdf_path)
